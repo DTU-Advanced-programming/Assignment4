@@ -61,7 +61,6 @@ public class GameController {
             int n = board.getPlayersNumber();
             Player next = board.getPlayer( n + 1);
             }
-
     }
 
     // XXX V2
