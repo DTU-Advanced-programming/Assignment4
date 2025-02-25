@@ -244,4 +244,14 @@ public class GameController {
         assert false;
     }
 
+    private int count;
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount() {
+        this.count = count;
+    }
+
 }
