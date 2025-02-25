@@ -62,6 +62,13 @@ public class GameController {
         board.setCurrentPlayer(board.getPlayer((board.getPlayerNumber(curr)+1)% board.getPlayersNumber()));
         board.setCounter(board.getCounter()+1);
 
+        Player currentPlayer = board.getCurrentPlayer();
+
+        if (space != null && space.getPlayer() != null) {
+            space.setPlayer(currentPlayer);
+            int n = board.getPlayersNumber();
+            Player next = board.getPlayer( n + 1);
+            }
     }
 
     // XXX V2
@@ -243,6 +250,16 @@ public class GameController {
     public void notImplemented() {
         // XXX just for now to indicate that the actual method is not yet implemented
         assert false;
+    }
+
+    private int count;
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount() {
+        this.count = count;
     }
 
 }
