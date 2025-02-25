@@ -57,8 +57,8 @@ public class GameController {
         if (space != null && space.getPlayer() != null) {
             current.setSpace(space);
             int number = board.getPlayerNumber(current);
+
         }
-        int number = board.getPlayerNumber(current);
 
     }
 
