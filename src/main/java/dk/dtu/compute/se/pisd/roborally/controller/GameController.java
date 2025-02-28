@@ -259,7 +259,10 @@ public class GameController {
     }
 
     public void setCount() {
-        this.count = count;
+        if (this.count != count) {
+            this.count = count;
+            // notifyChange();
+        }
     }
 
 }
