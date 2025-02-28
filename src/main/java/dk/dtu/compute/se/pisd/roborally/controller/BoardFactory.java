@@ -51,8 +51,8 @@ public class BoardFactory {
             board = new Board(8,8, name);
         }
 
-        if ("Classic Board".equals(name)) {
-            createClassicBoard(board);
+        if ("Simple Board".equals(name)) {
+            createSimpleBoard(board);
         } else if ("Advanced Board".equals(name)) {
             createAdvancedBoard(board);
         }
@@ -60,7 +60,7 @@ public class BoardFactory {
         return board;
     }
 
-    private void createClassicBoard(Board board) {
+    private void createSimpleBoard(Board board) {
         addWallsAndBelts(board);
     }
 
