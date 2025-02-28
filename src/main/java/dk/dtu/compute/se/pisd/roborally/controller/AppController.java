@@ -47,6 +47,7 @@ public class AppController implements Observer {
 
     final private List<Integer> PLAYER_NUMBER_OPTIONS = Arrays.asList(2, 3, 4, 5, 6);
     final private List<String> PLAYER_COLORS = Arrays.asList("red", "green", "blue", "orange", "grey", "magenta");
+    final private List<String> BOARD_OPTIONS = Arrays.asList("simple", "advanced");
 
     final private RoboRally roboRally;
 
@@ -61,6 +62,11 @@ public class AppController implements Observer {
         dialog.setTitle("Player number");
         dialog.setHeaderText("Select number of players");
         Optional<Integer> result = dialog.showAndWait();
+
+        ChoiceDialog<String> dialog2 = new ChoiceDialog<>(BOARD_OPTIONS.get(0), BOARD_OPTIONS);
+        dialog2.setTitle("Board selection");
+        dialog2.setHeaderText("Select which board to use");
+        Optional<String> result2 = dialog2.showAndWait();
 
         if (result.isPresent()) {
             if (gameController != null) {
