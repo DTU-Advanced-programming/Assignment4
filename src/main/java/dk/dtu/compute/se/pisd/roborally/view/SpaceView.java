@@ -22,12 +22,17 @@
 package dk.dtu.compute.se.pisd.roborally.view;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
+import dk.dtu.compute.se.pisd.roborally.controller.ConveyorBelt;
+import dk.dtu.compute.se.pisd.roborally.controller.FieldAction;
+import dk.dtu.compute.se.pisd.roborally.model.Heading;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
 
 /**
  * ...
@@ -80,6 +85,10 @@ public class SpaceView extends StackPane implements ViewObserver {
                 arrow.setFill(Color.MEDIUMPURPLE);
             }
 
+            //player.getHeading =
+            //where south = 0, west = 1, north = 2, east = 3.
+            //ordinal = An ordinal number is a number that indicates the position or order of an object or a person
+            //It finds out where the arrow is headed and rotates 90 * x times towards that direction
             arrow.setRotate((90*player.getHeading().ordinal())%360);
             this.getChildren().add(arrow);
         }
@@ -89,6 +98,27 @@ public class SpaceView extends StackPane implements ViewObserver {
     public void updateView(Subject subject) {
         if (subject == this.space) {
             this.getChildren().clear();
+
+            //Compiles all possible FieldActions as a list
+            List<FieldAction> actions = space.getActions();
+
+            //Running through the list and represent the different instances as action/symbols
+            for (FieldAction action: actions) {
+                if (action instanceof ConveyorBelt) {
+                    ConveyorBelt conveyorBelt = (ConveyorBelt) action;
+                    Heading heading = conveyorBelt.getHeading();
+
+                    Polygon conveyorTriangle = new Polygon(0.0, 0.0,
+                            40.0, 30.0,
+                            30.0, 0.0 );
+
+                    conveyorTriangle.setRotate((90*conveyorBelt.getHeading().ordinal())%360);
+                }
+            }
+
+
+            //Represent all the symbols such as checkpoints and conveyor belts
+            //Work on conveyor belt, checkpoints and walls symbols design
 
             // XXX A3: drawing walls and action on the space (could be done
             //         here); it would be even better if fixed things on
