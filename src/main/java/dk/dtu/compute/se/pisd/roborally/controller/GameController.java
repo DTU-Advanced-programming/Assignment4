@@ -206,7 +206,8 @@ public class GameController {
     }
 
     public void moveForward(@NotNull Player player) {
-        player.setSpace(board.getNeighbour(player.getSpace(),player.getHeading()));
+        Space newSpace = board.getNeighbour(player.getSpace(),player.getHeading());
+        if (newSpace != null) {player.setSpace(newSpace);}
     }
 
     public void fastForward(@NotNull Player player) {
@@ -215,15 +216,16 @@ public class GameController {
     }
 
     public void turnRight(@NotNull Player player) {
-        player.setHeading(player.getHeading().prev());
-    }
-
-    public void turnLeft(@NotNull Player player) {
         player.setHeading(player.getHeading().next());
     }
 
+    public void turnLeft(@NotNull Player player) {
+        player.setHeading(player.getHeading().prev());
+    }
+
     public void moveBackward(@NotNull Player player) {
-        player.setSpace(board.getNeighbour(player.getSpace(),player.getHeading().next().next()));
+        Space newSpace = board.getNeighbour(player.getSpace(),player.getHeading().next().next());
+        if (newSpace != null) {player.setSpace(newSpace);}
     }
 
     public void uTurn(@NotNull Player player) {
