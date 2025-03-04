@@ -200,6 +200,9 @@ public class Board extends Subject {
         //          (see above JavaDoc comment for this method).
         int x = space.x;
         int y = space.y;
+
+        if (space.getWalls().contains(heading)) {return null;}  //Checks whether current space has wall
+
         switch (heading) {
             case SOUTH:
                 y = (y + 1) % height;
@@ -215,7 +218,11 @@ public class Board extends Subject {
                 break;
         }
 
-        return getSpace(x, y);
+        Space newSpace = getSpace(x,y);
+
+        if (newSpace.getWalls().contains(heading.next().next())) {return null;}     //Checks whether next space has wall
+
+        return newSpace;
     }
 
     public String getStatusMessage() {
