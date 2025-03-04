@@ -47,7 +47,7 @@ public class AppController implements Observer {
 
     final private List<Integer> PLAYER_NUMBER_OPTIONS = Arrays.asList(2, 3, 4, 5, 6);
     final private List<String> PLAYER_COLORS = Arrays.asList("red", "green", "blue", "orange", "grey", "magenta");
-    final private List<String> BOARD_OPTIONS = Arrays.asList("simple", "advanced");
+    final private List<String> BOARD_OPTIONS = Arrays.asList("Simple", "Advanced");
 
     final private RoboRally roboRally;
 
@@ -79,7 +79,7 @@ public class AppController implements Observer {
 
             // XXX the board should eventually be created programmatically or loaded from a file
             //     here we just create an empty board with the required number of players.
-            Board board = BoardFactory.getInstance().createBoard(null);
+            Board board = BoardFactory.getInstance().createBoard(result2.get());
             gameController = new GameController(board);
             int no = result.get();
             for (int i = 0; i < no; i++) {

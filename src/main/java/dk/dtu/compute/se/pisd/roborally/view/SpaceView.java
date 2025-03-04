@@ -123,30 +123,6 @@ public class SpaceView extends StackPane implements ViewObserver {
                 }
             }
 
-            //Compiles all possible FieldActions as a list
-            List<FieldAction> actions = space.getActions();
-
-            //Running through the list and represent the different instances as action/symbols
-            for (FieldAction action: actions) {
-                if (action instanceof ConveyorBelt) {
-                    //Typecasting action to conveyorbelt if it is an instance of
-                    ConveyorBelt conveyorBelt = (ConveyorBelt) action;
-                    //Where it is heading towards S, W, N or E
-                    Heading heading = conveyorBelt.getHeading();
-
-                    //Graphical element to represent ConveyorBelt as a larger triangle than the players' arrow
-                    Polygon conveyorArrow = new Polygon(0.0, 0.0,
-                            40.0, 30.0,
-                            30.0, 0.0 );
-                    conveyorArrow.setFill(Color.GRAY);
-
-                    //Making it point in the direction it pushes - reusing code from updatePlayer
-                    conveyorArrow.setRotate((90*heading.ordinal())%360);
-                    this.getChildren().add(conveyorArrow);
-                }
-            }
-
-
             //Represent all the symbols such as checkpoints and conveyor belts
             //Work on conveyor belt, checkpoints and walls symbols design
 
