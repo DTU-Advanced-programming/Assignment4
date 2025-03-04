@@ -25,25 +25,28 @@ import dk.dtu.compute.se.pisd.roborally.model.Heading;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * This class represents a conveyor belt on a space.
+ *
+ * @author Ekkart Kindler, ekki@dtu.dk
+ *
+ */
+// XXX A3
 public class Checkpoint extends FieldAction {
 
-    private Heading heading;
+    private int number;
 
+    public void setNumber(int num) {number = num;}
 
-    public Heading getHeading() {
-        return heading;
-    }
-
-    public void setHeading(Heading heading) {
-        this.heading = heading;
-    }
+    public int getNumber() {return number;}
 
     /**
      * Implementation of the action of a conveyor belt. Needs to be implemented for A3.
      */
     @Override
     public boolean doAction(@NotNull GameController gameController, @NotNull Space space) {
-
+        // TODO A3: needs to be implemented
+        // ...
         return false;
     }
 

@@ -22,14 +22,21 @@
 package dk.dtu.compute.se.pisd.roborally.view;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
+import dk.dtu.compute.se.pisd.roborally.controller.Checkpoint;
 import dk.dtu.compute.se.pisd.roborally.controller.ConveyorBelt;
 import dk.dtu.compute.se.pisd.roborally.controller.FieldAction;
 import dk.dtu.compute.se.pisd.roborally.model.Heading;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
+import javafx.scene.shape.StrokeLineCap;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -98,6 +105,23 @@ public class SpaceView extends StackPane implements ViewObserver {
     public void updateView(Subject subject) {
         if (subject == this.space) {
             this.getChildren().clear();
+            for (Heading direction : this.space.getWalls()) {    //imported HEADING enum
+                this.getChildren().add(waller(direction));
+            }
+            for (FieldAction FA : this.space.getActions()) {
+                if (FA instanceof ConveyorBelt cb) {
+                    Polygon arrow = new Polygon(0.0, 0.0,
+                            10.0, 20.0,
+                            20.0, 0.0);
+                    arrow.setFill(Color.GRAY);
+                    arrow.setRotate((90 * cb.getHeading().ordinal()) % 360);
+                    this.getChildren().add(arrow);
+                } else if (FA instanceof Checkpoint cp) {
+                    this.getChildren().add(getCircle());
+                    Text numberText = new Text(Integer.toString(cp.getNumber()));  // Adjust for centering
+                    this.getChildren().add(numberText);
+                }
+            }
 
             //Compiles all possible FieldActions as a list
             List<FieldAction> actions = space.getActions();
@@ -134,4 +158,27 @@ public class SpaceView extends StackPane implements ViewObserver {
         }
     }
 
+    private Canvas waller(@NotNull Heading dir) {
+        Canvas canvas =new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
+        GraphicsContext gc =canvas.getGraphicsContext2D();
+        gc.setStroke(Color.RED);
+        gc.setLineWidth(5);
+        gc.setLineCap(StrokeLineCap.ROUND);
+        gc.strokeLine(2, SPACE_HEIGHT-2,SPACE_WIDTH-2, SPACE_HEIGHT-2);
+        canvas.setRotate((90 * dir.ordinal()) % 360);
+        return canvas;
+    }
+
+    public static Polygon getCircle() {
+        Polygon polygon = new Polygon();
+        for (int i = 0; i < 360; i++) {
+            double angle = 2 * Math.PI * i / 360;
+            double x = 20 * Math.cos(angle);
+            double y = 20 * Math.sin(angle);
+            polygon.getPoints().addAll(x, y);
+        }
+        polygon.setStroke(Color.BLUE);
+        polygon.setFill(Color.YELLOW);  // Transparent fill
+        return polygon;
+    }
 }
