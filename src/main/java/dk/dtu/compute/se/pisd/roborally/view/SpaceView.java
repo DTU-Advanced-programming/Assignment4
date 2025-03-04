@@ -39,6 +39,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+
 /**
  * ...
  *
@@ -90,6 +92,10 @@ public class SpaceView extends StackPane implements ViewObserver {
                 arrow.setFill(Color.MEDIUMPURPLE);
             }
 
+            //player.getHeading =
+            //where south = 0, west = 1, north = 2, east = 3.
+            //ordinal = An ordinal number is a number that indicates the position or order of an object or a person
+            //It finds out where the arrow is headed and rotates 90 * x times towards that direction
             arrow.setRotate((90*player.getHeading().ordinal())%360);
             this.getChildren().add(arrow);
         }
@@ -116,6 +122,33 @@ public class SpaceView extends StackPane implements ViewObserver {
                     this.getChildren().add(numberText);
                 }
             }
+
+            //Compiles all possible FieldActions as a list
+            List<FieldAction> actions = space.getActions();
+
+            //Running through the list and represent the different instances as action/symbols
+            for (FieldAction action: actions) {
+                if (action instanceof ConveyorBelt) {
+                    //Typecasting action to conveyorbelt if it is an instance of
+                    ConveyorBelt conveyorBelt = (ConveyorBelt) action;
+                    //Where it is heading towards S, W, N or E
+                    Heading heading = conveyorBelt.getHeading();
+
+                    //Graphical element to represent ConveyorBelt as a larger triangle than the players' arrow
+                    Polygon conveyorArrow = new Polygon(0.0, 0.0,
+                            40.0, 30.0,
+                            30.0, 0.0 );
+                    conveyorArrow.setFill(Color.GRAY);
+
+                    //Making it point in the direction it pushes - reusing code from updatePlayer
+                    conveyorArrow.setRotate((90*heading.ordinal())%360);
+                    this.getChildren().add(conveyorArrow);
+                }
+            }
+
+
+            //Represent all the symbols such as checkpoints and conveyor belts
+            //Work on conveyor belt, checkpoints and walls symbols design
 
             // XXX A3: drawing walls and action on the space (could be done
             //         here); it would be even better if fixed things on
