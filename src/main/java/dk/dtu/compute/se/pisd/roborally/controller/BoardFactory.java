@@ -44,32 +44,32 @@ public class BoardFactory {
      * @return the new board corresponding to that name
      */
     public Board createBoard(String name) {
-        Board board;
-        if (name == null) {
-            board = new Board(8,8, "<none>");
-        } else {
-            board = new Board(8,8, name);
-        }
 
-        if ("Simple Board".equals(name)) {
-            createSimpleBoard(board);
-        } else if ("Advanced Board".equals(name)) {
-            createAdvancedBoard(board);
+        Board board;
+        if ("Simple".equals(name)) {
+            board = createSimpleBoard();
+        } else if ("Advanced".equals(name)) {
+            board = createAdvancedBoard();
+        } else {
+            board = new Board(8,8, "<none>");
         }
 
         return board;
     }
 
-    private void createSimpleBoard(Board board) {
-        addWallsAndBelts(board);
+    private Board createSimpleBoard() {
+        Board board = new Board(8,8, "Simple");
+        return addWallsAndBelts(board);
     }
 
-    private void createAdvancedBoard(Board board) {
-        addWallsAndBelts(board);
+    private Board createAdvancedBoard() {
+        Board board = new Board(9,9, "Simple");
+        return addWallsAndBelts(board);
         // extra for new features for advanced board
     }
 
-    private void addWallsAndBelts(Board board) {
+    private Board addWallsAndBelts(Board board) {
+
         Space space = board.getSpace(0,0);
         space.getWalls().add(Heading.SOUTH);
         ConveyorBelt action = new ConveyorBelt();
@@ -109,5 +109,7 @@ public class BoardFactory {
         action = new ConveyorBelt();
         action.setHeading(Heading.WEST);
         space.getActions().add(action);
+
+        return board;
     }
 }

@@ -53,13 +53,17 @@ public class GameController {
         //   - the counter of moves in the game should be increased by one
         //     if and when the player is moved (the counter and the status line
         //     message needs to be implemented at another place)
-        Player current = board.getCurrentPlayer();
-        if (space != null && space.getPlayer() != null) {
-            current.setSpace(space);
-            int number = board.getPlayerNumber(current);
-        }
 
+        if (space.getPlayer() != null) {
+            // if no other player is present here, ignoring walls and other things
+            return;
+        }
+        Player curr = board.getCurrentPlayer();
+        curr.setSpace(space);
+        board.setCurrentPlayer(board.getPlayer((board.getPlayerNumber(curr)+1)% board.getPlayersNumber()));
+        board.setCounter(board.getCounter()+1);
     }
+
 
     // XXX V2
     public void startProgrammingPhase() {
