@@ -32,14 +32,14 @@ public enum Heading {
     SOUTH, WEST, NORTH, EAST;
 
     /**
-    Used to turn left
+    Used to turn right
      **/
     public Heading next() {
         return values()[(this.ordinal() + 1) % values().length];
     }
 
     /**
-     Used to turn right
+     Used to turn left
      **/
     public Heading prev() {
         return values()[(this.ordinal() + values().length - 1) % values().length];
