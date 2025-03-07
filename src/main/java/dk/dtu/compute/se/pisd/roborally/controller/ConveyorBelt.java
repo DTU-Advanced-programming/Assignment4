@@ -50,10 +50,17 @@ public class ConveyorBelt extends FieldAction {
      */
     @Override
     public boolean doAction(@NotNull GameController gameController, @NotNull Space space) {
-        // TODO A3: needs to be implemented
-        // ...
+        if (space.getPlayer() != null) {
+            Space newSpace = gameController.board.getNeighbour(space, heading);
+            try {
+                gameController.moveToSpace(space.getPlayer(), newSpace, heading);
+            } catch (GameController.ImpossibleMoveException e) {
+                // when pushing not possible due to wall
+                System.out.println(e.getMessage() + e.player + "while on ConveyorBelt");
+                return false;
+            }
 
-        return false;
+        }
+        return true;
     }
-
 }

@@ -200,7 +200,7 @@ public class GameController {
                 if (nextPlayerNumber < board.getPlayersNumber()) {
                     board.setCurrentPlayer(board.getPlayer(nextPlayerNumber));
                 } else {
-                    // Insert doAllAction() (new method for doAction...)
+                    doAllAction();
                     step++;
                     if (step < Player.NO_REGISTERS) {
                         makeProgramFieldsVisible(step);
@@ -217,6 +217,17 @@ public class GameController {
         } else {
             // this should not happen
             assert false;
+        }
+    }
+
+    private void doAllAction(){
+        for (int x = 0; x<board.width; x++) {
+            for (int y =0; y < board.height; y++) {
+                Space space = board.getSpace(x, y);
+                for (FieldAction fa : space.getActions()) {
+                    fa.doAction(this, space);
+                }
+            }
         }
     }
 
@@ -269,7 +280,26 @@ public class GameController {
 
     public void moveForward(@NotNull Player player) {
         Space newSpace = board.getNeighbour(player.getSpace(),player.getHeading());
-        if (newSpace != null) {player.setSpace(newSpace);}
+        try {
+            moveToSpace(player, newSpace, player.getHeading());
+        } catch (ImpossibleMoveException e) {
+            // when pushing not possible due to wall
+            System.out.println(e.getMessage() + e.player + "to move fwd");
+            return;
+        }
+
+    }
+
+    //to be used by moveForward and ConveyorBelt
+    public void moveToSpace(@NotNull Player player, Space space, Heading heading) throws ImpossibleMoveException{
+        if (space == null) {return;}    //for walls
+        if (space.getPlayer() != null) {
+            Space newSpace  = board.getNeighbour(space, heading);
+            if (newSpace != null) {
+                moveToSpace(space.getPlayer(), newSpace, heading);
+            } else { throw new ImpossibleMoveException("Invalid move by: ",player); }
+        }
+        player.setSpace(space);
     }
 
     public void fastForward(@NotNull Player player) {
@@ -287,7 +317,12 @@ public class GameController {
 
     public void moveBackward(@NotNull Player player) {
         Space newSpace = board.getNeighbour(player.getSpace(),player.getHeading().next().next());
-        if (newSpace != null) {player.setSpace(newSpace);}
+        try {
+            moveToSpace(player, newSpace, player.getHeading().next().next());
+        } catch (ImpossibleMoveException e) {
+            // when pushing not possible due to wall
+            System.out.println(e.getMessage() + e.player + "during bwd movement");
+        }
     }
 
     public void uTurn(@NotNull Player player) {
@@ -303,6 +338,16 @@ public class GameController {
             return true;
         } else {
             return false;
+        }
+    }
+
+    public static class ImpossibleMoveException extends ReflectiveOperationException {
+
+        final public Player player;
+
+        public ImpossibleMoveException(String message, Player player) {
+            super(message);
+            this.player = player;
         }
     }
 
