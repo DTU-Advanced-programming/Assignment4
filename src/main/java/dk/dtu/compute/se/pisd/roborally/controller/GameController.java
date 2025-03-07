@@ -202,7 +202,7 @@ public class GameController {
                 case BACKWARD:
                     this.moveBackward(player);
                     break;
-                case uTurn:
+                case uTURN:
                     this.uTurn(player);
                     break;
                 default:
