@@ -56,9 +56,10 @@ public class ConveyorBelt extends FieldAction {
                 gameController.moveToSpace(space.getPlayer(), newSpace, heading);
             } catch (GameController.ImpossibleMoveException e) {
                 // when pushing not possible due to wall
-                System.out.println(e.getMessage() + e.player);
+                System.out.println(e.getMessage() + e.player + "while on ConveyorBelt");
                 return false;
             }
+
         }
         return true;
     }
