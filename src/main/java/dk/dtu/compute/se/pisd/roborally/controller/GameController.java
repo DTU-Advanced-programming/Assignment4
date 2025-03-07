@@ -199,6 +199,12 @@ public class GameController {
                 case FAST_FORWARD:
                     this.fastForward(player);
                     break;
+                case BACKWARD:
+                    this.moveBackward(player);
+                    break;
+                case uTurn:
+                    this.uTurn(player);
+                    break;
                 default:
                     // DO NOTHING (for now)
             }
