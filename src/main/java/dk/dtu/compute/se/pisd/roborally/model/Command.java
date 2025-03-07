@@ -34,7 +34,9 @@ public enum Command {
     FORWARD("Fwd"),
     RIGHT("Turn Right"),
     LEFT("Turn Left"),
-    FAST_FORWARD("Fast Fwd");
+    FAST_FORWARD("Fast Fwd"),
+    BACKWARD("Backward"),
+    uTURN("U Turn");
 
     final public String displayName;
 

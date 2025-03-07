@@ -46,8 +46,8 @@ class GameControllerTest {
         Assertions.assertEquals(player, board.getSpace(0, 4).getPlayer(), "Player " + player.getName() + " should be on Space (0,4)!");
     }
 
-    /*
-        The following tests should be used later for assignment V2
+
+        //The following tests should be used later for assignment V2
 
     @Test
     void moveCurrentPlayerToSpace() {
@@ -74,7 +74,40 @@ class GameControllerTest {
         Assertions.assertNull(board.getSpace(0, 0).getPlayer(), "Space (0,0) should be empty!");
     }
 
-     */
+    @Test
+    void fastForward(){
+        Board board = gameController.board;
+        Player current = board.getCurrentPlayer();
+
+        gameController.fastForward(current);
+
+        Assertions.assertEquals(current, board.getSpace(0, 2).getPlayer(), "Player " + current.getName() + " should beSpace (0,2)!");
+        Assertions.assertEquals(Heading.SOUTH, current.getHeading(), "Player 0 should be heading SOUTH!");
+        Assertions.assertNull(board.getSpace(0, 0).getPlayer(), "Space (0,0) should be empty!");
+    }
+
+    @Test
+    void turnRight(){
+        Board board = gameController.board;
+        Player current = board.getCurrentPlayer();
+
+        gameController.turnRight(current);
+
+        Assertions.assertEquals(Heading.EAST, current.getHeading(), "Player 0 should be heading EAST!");
+    }
+
+    @Test
+    void turnLeft(){
+        Board board = gameController.board;
+        Player current = board.getCurrentPlayer();
+
+        gameController.moveForward(current);
+
+        Assertions.assertEquals(Heading.WEST, current.getHeading(), "Player 0 should be heading WEST!");
+
+    }
+
+
 
     // TDOD and there should be more tests added for the different assignments eventually
 
