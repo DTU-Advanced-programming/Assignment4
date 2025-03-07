@@ -65,7 +65,21 @@ public class GameController {
     }
 
 
-    // XXX V2
+    /**
+     * Starts the programming phase of the game.
+     *
+     * Sets the game phase to {@link Phase#PROGRAMMING}, resets the current player to the first player,
+     * and initializes the step counter to 0. Clears all program fields and generates random command cards
+     * for each player's hand.
+     * This method prepares the game for players to program their robots by selecting and placing
+     * command cards into their program registers.
+     *
+     * @see Phase
+     * @see Player
+     * @see CommandCardField
+     * @see CommandCard
+     * @see #generateRandomCommandCard()
+     */
     public void startProgrammingPhase() {
         board.setPhase(Phase.PROGRAMMING);
         board.setCurrentPlayer(board.getPlayer(0));
@@ -88,14 +102,31 @@ public class GameController {
         }
     }
 
-    // XXX V2
+    /**
+     * Generates a random command card for use in the game.
+     *
+     * This method selects a random command from the available commands in the {@link Command} enum
+     * and creates a new {@link CommandCard} with the selected command.
+     * @return A randomly generated {@link CommandCard}.
+     * @see Command
+     * @see CommandCard
+     */
     private CommandCard generateRandomCommandCard() {
         Command[] commands = Command.values();
         int random = (int) (Math.random() * commands.length);
         return new CommandCard(commands[random]);
     }
 
-    // XXX V2
+    /**
+     * Ends the programming phase and transitions the game to the activation phase.
+     *
+     * This method hides all program fields, makes the first register's fields visible, and sets the game
+     * phase to {@link Phase#ACTIVATION}. It also resets the current player and step counter to prepare
+     * for the execution of the programmed commands.
+     * @see Phase
+     * @see #makeProgramFieldsInvisible()
+     * @see #makeProgramFieldsVisible(int)
+     */
     public void finishProgrammingPhase() {
         makeProgramFieldsInvisible();
         makeProgramFieldsVisible(0);
@@ -104,7 +135,16 @@ public class GameController {
         board.setStep(0);
     }
 
-    // XXX V2
+    /**
+     * Makes the program fields visible for a specific register.
+     *
+     * This method ensures that the program fields for the specified register are visible for all players.
+     * The register must be a valid index (between 0 and {@link Player#NO_REGISTERS} - 1).
+     * @param register The index of the register whose program fields should be made visible.
+     * Must be a valid register index (0 <= register < {@link Player#NO_REGISTERS}).
+     * @see Player
+     * @see CommandCardField
+     */
     private void makeProgramFieldsVisible(int register) {
         if (register >= 0 && register < Player.NO_REGISTERS) {
             for (int i = 0; i < board.getPlayersNumber(); i++) {
@@ -180,6 +220,21 @@ public class GameController {
         }
     }
 
+    /**
+     * Executes a specific command for the given player.
+     * This method performs the action associated with the provided command, such as moving the player
+     * forward, turning left or right, or performing a fast forward. The command is executed only if
+     * the player and command are valid.
+     * @param player  The player for whom the command is executed. Must not be {@code null}.
+     * @param command The command to execute. Must not be {@code null}.
+     *
+     * @see Player
+     * @see Command
+     * @see #moveForward(Player)
+     * @see #turnRight(Player)
+     * @see #turnLeft(Player)
+     * @see #fastForward(Player)
+     */
     // XXX V2
     private void executeCommand(@NotNull Player player, Command command) {
         if (player != null && player.board == board && command != null) {
