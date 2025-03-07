@@ -207,7 +207,25 @@ public class GameController {
 
     public void moveForward(@NotNull Player player) {
         Space newSpace = board.getNeighbour(player.getSpace(),player.getHeading());
-        if (newSpace != null) {player.setSpace(newSpace);}
+        try {
+            moveToSpace(player, newSpace, player.getHeading());
+        } catch (ImpossibleMoveException e) {
+            // when pushing not possible due to wall
+            System.out.println(e.getMessage()+e.player);
+            return ;
+        }
+    }
+
+    //to be used by moveForward and ConveyorBelt
+    public void moveToSpace(@NotNull Player player, Space space, Heading heading) throws ImpossibleMoveException{
+        //Assumes walls already handled
+        if (space.getPlayer() != null) {
+            Space newSpace  = board.getNeighbour(space, heading);
+            if (newSpace != null) {
+                moveToSpace(space.getPlayer(), newSpace, heading);
+            } else { throw new ImpossibleMoveException("Invalid move by: ",player); }
+        }
+        player.setSpace(space);
     }
 
     public void fastForward(@NotNull Player player) {
@@ -225,7 +243,12 @@ public class GameController {
 
     public void moveBackward(@NotNull Player player) {
         Space newSpace = board.getNeighbour(player.getSpace(),player.getHeading().next().next());
-        if (newSpace != null) {player.setSpace(newSpace);}
+        try {
+            moveToSpace(player, newSpace, player.getHeading());
+        } catch (ImpossibleMoveException e) {
+            // when pushing not possible due to wall
+            System.out.println(e.getMessage()+e.player);
+        }
     }
 
     public void uTurn(@NotNull Player player) {
@@ -241,6 +264,16 @@ public class GameController {
             return true;
         } else {
             return false;
+        }
+    }
+
+    public static class ImpossibleMoveException extends ReflectiveOperationException {
+
+        final public Player player;
+
+        public ImpossibleMoveException(String message, Player player) {
+            super(message);
+            this.player = player;
         }
     }
 

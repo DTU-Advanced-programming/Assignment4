@@ -43,5 +43,4 @@ public abstract class FieldAction {
      * @return whether the action was successfully executed
      */
     public abstract boolean doAction(GameController gameController, Space space);
-
 }

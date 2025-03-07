@@ -47,6 +47,7 @@ public class Checkpoint extends FieldAction {
     public boolean doAction(@NotNull GameController gameController, @NotNull Space space) {
         // TODO A3: needs to be implemented
         // ...
+
         return false;
     }
 
