@@ -56,18 +56,31 @@ public class BoardFactory {
 
         return board;
     }
-
+    /**
+     * Creates a simple game board for testing or initialization.
+     * @return A new {@link Board} with default configurations.
+     * @see Board
+     */
     private Board createSimpleBoard() {
         Board board = new Board(8,8, "Simple");
         return addWallsAndBelts(board);
     }
-
+    /**
+     * Creates an advanced game board with complex configurations.
+     * @return A new {@link Board} with advanced setups.
+     * @see Board
+     */
     private Board createAdvancedBoard() {
         Board board = new Board(9,9, "Simple");
         return addWallsAndBelts(board);
         // extra for new features for advanced board
     }
-
+    /**
+     * Adds walls and conveyor belts to the provided board.
+     * @param board The board to modify. Must not be {@code null}.
+     * @return The modified board with walls and belts added.
+     * @see Board
+     */
     private Board addWallsAndBelts(Board board) {
 
         Space space = board.getSpace(0,0);

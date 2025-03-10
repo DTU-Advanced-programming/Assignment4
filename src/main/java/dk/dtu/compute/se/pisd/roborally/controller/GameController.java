@@ -155,7 +155,16 @@ public class GameController {
         }
     }
 
-    // XXX V2
+    /**
+     * Hides all program fields for all players.
+     *
+     * This method iterates through all players and sets the visibility of their program fields
+     * to false. This is typically used at the end of the programming phase or during transitions
+     * between game phases to hide the program fields.
+     *
+     * @see Player
+     * @see CommandCardField
+     */
     private void makeProgramFieldsInvisible() {
         for (int i = 0; i < board.getPlayersNumber(); i++) {
             Player player = board.getPlayer(i);
@@ -185,7 +194,19 @@ public class GameController {
         } while (board.getPhase() == Phase.ACTIVATION && !board.isStepMode());
     }
 
-    // XXX V2
+    /**
+     * Executes the next step in the program for the current player.
+     *
+     * This method retrieves the command card for the current step of the current player and executes
+     * the associated command. It then advances to the next player or step, depending on the game state.
+     * If all steps are completed, the game transitions back to the programming phase.
+     *
+     * @see Player
+     * @see CommandCard
+     * @see Command
+     * @see #executeCommand(Player, Command)
+     * @see #startProgrammingPhase()
+     */
     private void executeNextStep() {
         Player currentPlayer = board.getCurrentPlayer();
         if (board.getPhase() == Phase.ACTIVATION && currentPlayer != null) {
@@ -246,7 +267,6 @@ public class GameController {
      * @see #turnLeft(Player)
      * @see #fastForward(Player)
      */
-    // XXX V2
     private void executeCommand(@NotNull Player player, Command command) {
         if (player != null && player.board == board && command != null) {
             // XXX This is a very simplistic way of dealing with some basic cards and
@@ -277,7 +297,14 @@ public class GameController {
             }
         }
     }
-
+    /**
+     * Moves the player forward one space in their current heading, if no wall blocks the movement.
+     *
+     * @param player The player to move. Must not be {@code null}.
+     *
+     * @see Player
+     * @see Space
+     */
     public void moveForward(@NotNull Player player) {
         Space newSpace = board.getNeighbour(player.getSpace(),player.getHeading());
         try {
@@ -290,7 +317,14 @@ public class GameController {
 
     }
 
-    //to be used by moveForward and ConveyorBelt
+    /**
+     * Moves the player to the specified space.
+     *
+     * @param player The player to move. Must not be {@code null}.
+     * @param space  The space to move the player to. Must not be {@code null}.
+     * @see Player
+     * @see Space
+     */
     public void moveToSpace(@NotNull Player player, Space space, Heading heading) throws ImpossibleMoveException{
         if (space == null) {return;}    //for walls
         if (space.getPlayer() != null) {
@@ -301,20 +335,41 @@ public class GameController {
         }
         player.setSpace(space);
     }
-
+    /**
+     * Moves the player forward two spaces in their current heading, if no walls block the movement.
+     *
+     * @param player The player to move. Must not be {@code null}.
+     * @see Player
+     * @see #moveForward(Player)
+     */
     public void fastForward(@NotNull Player player) {
         moveForward(player);
         moveForward(player);
     }
-
+    /**
+     * Rotates the player 90 degrees to the right (clockwise).
+     * @param player The player to rotate. Must not be {@code null}.
+     * @see Player
+     * @see Heading#next()
+     */
     public void turnRight(@NotNull Player player) {
         player.setHeading(player.getHeading().next());
     }
-
+    /**
+     * Rotates the player 90 degrees to the left (counter-clockwise).
+     * @param player The player to rotate. Must not be {@code null}.
+     * @see Player
+     * @see Heading#prev()
+     */
     public void turnLeft(@NotNull Player player) {
         player.setHeading(player.getHeading().prev());
     }
-
+    /**
+     * Moves the player backward one space in the opposite of their current heading, if no walls block the movement.
+     * @param player The player to move. Must not be {@code null}.
+     * @see Player
+     * @see #moveForward(Player)
+     */
     public void moveBackward(@NotNull Player player) {
         Space newSpace = board.getNeighbour(player.getSpace(),player.getHeading().next().next());
         try {
@@ -324,7 +379,12 @@ public class GameController {
             System.out.println(e.getMessage() + e.player + "during bwd movement");
         }
     }
-
+    /**
+     * Rotates the player 180 degrees, effectively reversing their heading.
+     * @param player The player to rotate. Must not be {@code null}.
+     * @see Player
+     * @see Heading#next()
+     */
     public void uTurn(@NotNull Player player) {
         player.setHeading(player.getHeading().next().next());
     }
