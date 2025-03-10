@@ -41,6 +41,8 @@ public class Player extends Subject {
 
     private String name;
     private String color;
+    
+    private int currentCheckpoint;
 
     private Space space;
     private Heading heading = SOUTH;
@@ -52,6 +54,8 @@ public class Player extends Subject {
         this.board = board;
         this.name = name;
         this.color = color;
+        
+        currentCheckpoint = 0;
 
         this.space = null;
 
@@ -90,6 +94,14 @@ public class Player extends Subject {
         if (space != null) {
             space.playerChanged();
         }
+    }
+    
+    public int getCurrentCheckpoint() {
+    	return currentCheckpoint;
+    }
+    
+    public void setCurrentCheckpoint(int checkpoint) {
+    	this.currentCheckpoint = checkpoint;
     }
 
     public Space getSpace() {

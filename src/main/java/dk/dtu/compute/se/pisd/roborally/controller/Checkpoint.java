@@ -40,14 +40,16 @@ public class Checkpoint extends FieldAction {
 
     public int getNumber() {return number;}
 
-    /**
-     * Implementation of the action of a conveyor belt. Needs to be implemented for A3.
-     */
+
     @Override
     public boolean doAction(@NotNull GameController gameController, @NotNull Space space) {
-        // TODO A3: needs to be implemented
-        // ...
-
+    	if (space.getPlayer() != null && space.getPlayer().getCurrentCheckpoint() == number - 1) {
+			space.getPlayer().setCurrentCheckpoint(number);
+			return true;
+		}
+    	
+    	
+    	
         return false;
     }
 
