@@ -55,7 +55,7 @@ public class Checkpoint extends FieldAction {
     @Override
     public boolean doAction(@NotNull GameController gameController, @NotNull Space space) {
     	if (isLast) {
-			//TODO check to see if the player has won
+			//TODO check to see if the player has won by checking if its the last checkpoint
 		}
     	if (space.getPlayer() != null && space.getPlayer().getCurrentCheckpoint() == number - 1) {
 			space.getPlayer().setCurrentCheckpoint(number);
