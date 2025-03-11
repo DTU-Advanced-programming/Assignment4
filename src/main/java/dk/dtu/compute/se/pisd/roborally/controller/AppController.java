@@ -56,7 +56,13 @@ public class AppController implements Observer {
     public AppController(@NotNull RoboRally roboRally) {
         this.roboRally = roboRally;
     }
-
+    /**
+     * Starts a new game by resetting the board and initializing players.
+     * This method prepares the game for a fresh start, typically by creating a new board,
+     * resetting players, and setting the initial game phase.
+     * @see Board
+     * @see Player
+     */
     public void newGame() {
         ChoiceDialog<Integer> dialog = new ChoiceDialog<>(PLAYER_NUMBER_OPTIONS.get(0), PLAYER_NUMBER_OPTIONS);
         dialog.setTitle("Player number");
@@ -128,7 +134,11 @@ public class AppController implements Observer {
         }
         return false;
     }
-
+    /**
+     * Exits the game, performing any necessary cleanup or shutdown operations.
+     * This method ensures that the game is properly terminated, releasing resources
+     * and saving any required data before exiting.
+     */
     public void exit() {
         if (gameController != null) {
             Alert alert = new Alert(AlertType.CONFIRMATION);
