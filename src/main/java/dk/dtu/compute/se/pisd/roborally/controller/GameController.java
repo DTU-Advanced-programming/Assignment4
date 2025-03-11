@@ -209,15 +209,22 @@ public class GameController {
      */
     private void executeNextStep() {
         Player currentPlayer = board.getCurrentPlayer();
-        if (board.getPhase() == Phase.ACTIVATION && currentPlayer != null) {
+        if ((board.getPhase() == Phase.ACTIVATION || board.getPhase() == Phase.INTERACTED)&& currentPlayer != null) {
             int step = board.getStep();
             if (step >= 0 && step < Player.NO_REGISTERS) {
                 CommandCard card = currentPlayer.getProgramField(step).getCard();
-                if (card != null) {
-                    Command command = card.command;
-                    executeCommand(currentPlayer, command);
+                if (board.getPhase() != Phase.INTERACTED && card != null) {
+                    if (card.command != Command.LEFT_OR_RIGHT) {
+                        Command command = card.command;
+                        executeCommand(currentPlayer, command);
+                    } else {
+                        board.setPhase(Phase.PLAYER_INTERACTION);
+                        return;
+                    }
+
                 }
                 int nextPlayerNumber = board.getPlayerNumber(currentPlayer) + 1;
+                board.setPhase(Phase.ACTIVATION);
                 if (nextPlayerNumber < board.getPlayersNumber()) {
                     board.setCurrentPlayer(board.getPlayer(nextPlayerNumber));
                 } else {
@@ -249,6 +256,13 @@ public class GameController {
                     fa.doAction(this, space);
                 }
             }
+        }
+    }
+
+    private void executeInteractiveCommand(@NotNull Player player, Command command) {
+        if (player != null && player.board == board && command != null) {
+            // for now only Left_or_Right, later case statements can be added
+
         }
     }
 
@@ -312,7 +326,6 @@ public class GameController {
         } catch (ImpossibleMoveException e) {
             // when pushing not possible due to wall
             System.out.println(e.getMessage() + e.player + "to move fwd");
-            return;
         }
 
     }
@@ -387,6 +400,18 @@ public class GameController {
      */
     public void uTurn(@NotNull Player player) {
         player.setHeading(player.getHeading().next().next());
+    }
+
+    public void l_button(@NotNull Player player) {
+        turnLeft(player);
+        board.setPhase(Phase.INTERACTED);
+        continuePrograms();
+    }
+
+    public void r_button(@NotNull Player player) {
+        turnRight(player);
+        board.setPhase(Phase.INTERACTED);
+        continuePrograms();
     }
 
     public boolean moveCards(@NotNull CommandCardField source, @NotNull CommandCardField target) {
