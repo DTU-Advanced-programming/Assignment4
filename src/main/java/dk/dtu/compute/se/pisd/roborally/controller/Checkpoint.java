@@ -39,10 +39,25 @@ public class Checkpoint extends FieldAction {
     public void setNumber(int num) {number = num;}
 
     public int getNumber() {return number;}
+    
+    
+    public boolean isLast = false;
+    
+    public void setLast(boolean last) {
+    	this.isLast = last;
+    }
+    
+    public boolean getLast() {
+    	return isLast;
+    }
 
 
     @Override
     public boolean doAction(@NotNull GameController gameController, @NotNull Space space) {
+    	if (isLast) {
+			//TODO check to see if the player has won by checking if its the last checkpoint
+    		//Game state should be changed to Phase.FINISHED and a dialog box with current player has won should appear
+		}
     	if (space.getPlayer() != null && space.getPlayer().getCurrentCheckpoint() == number - 1) {
 			space.getPlayer().setCurrentCheckpoint(number);
 			return true;
