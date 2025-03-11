@@ -97,6 +97,7 @@ public class BoardFactory {
         space = board.getSpace(4,4);
         action1  = new Checkpoint();
         action1.setNumber(2);
+        action1.setLast(true);
         space.getActions().add(action1);
 
         space = board.getSpace(5,5);
