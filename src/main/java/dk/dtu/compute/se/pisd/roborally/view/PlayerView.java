@@ -51,6 +51,8 @@ public class PlayerView extends Tab implements ViewObserver {
     private Label cardsLabel;
     private GridPane cardsPane;
 
+    private  Label playerStatus;
+
     private CardFieldView[] programCardViews;
     private CardFieldView[] cardViews;
 
@@ -87,6 +89,7 @@ public class PlayerView extends Tab implements ViewObserver {
                 programPane.add(programCardViews[i], i, 0);
             }
         }
+        playerStatus = new Label("");
 
         // FIXME the following buttons should actually not be on the tabs of the individual
         //       players, but on the PlayersView (view for all players). This should be
@@ -129,6 +132,7 @@ public class PlayerView extends Tab implements ViewObserver {
         top.getChildren().add(programPane);
         top.getChildren().add(cardsLabel);
         top.getChildren().add(cardsPane);
+        top.getChildren().add(playerStatus);
 
         // TODO A3 add a label for the status of this player could be added here
         //      ege showing the number of achieved chekpoints (etc).
@@ -143,6 +147,7 @@ public class PlayerView extends Tab implements ViewObserver {
     public void updateView(Subject subject) {
         if (subject == player.board) {
             // TODO A3 update the status label for this player
+            playerStatus.setText("checkpoints = " + player.getCurrentCheckpoint());
             for (int i = 0; i < Player.NO_REGISTERS; i++) {
                 CardFieldView cardFieldView = programCardViews[i];
                 if (cardFieldView != null) {
