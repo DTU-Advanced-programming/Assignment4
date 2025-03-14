@@ -118,7 +118,35 @@ class GameControllerTest {
         Assertions.assertNull(board.getSpace(0, 0).getPlayer(), "Space (0,0) should be empty!");
     }
 
+    @Test
+    void testWalls() {
+        Board board = gameController.board;
+        Player current = board.getCurrentPlayer();
 
+        gameController.moveBackward(current);
+
+        // TEST:
+    }
+
+    @Test
+    void testConveyorBelts() {
+        Board board = gameController.board;
+        Player current = board.getCurrentPlayer();
+
+        gameController.moveBackward(current);
+
+        // TEST:
+    }
+
+    @Test
+    void testCheckpoints() {
+        Board board = gameController.board;
+        Player current = board.getCurrentPlayer();
+
+        gameController.moveBackward(current);
+
+        // TEST:
+    }
 
     // TODO and there should be more tests added for the different assignments eventually
 
