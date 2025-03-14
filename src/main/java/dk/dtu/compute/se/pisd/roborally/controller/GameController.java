@@ -22,6 +22,7 @@
 package dk.dtu.compute.se.pisd.roborally.controller;
 
 import dk.dtu.compute.se.pisd.roborally.model.*;
+import javafx.scene.control.Alert;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -192,6 +193,12 @@ public class GameController {
         do {
             executeNextStep();
         } while (board.getPhase() == Phase.ACTIVATION && !board.isStepMode());
+        if (board.getPhase() == Phase.FINISHED) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Game Over! Thanks for playing.");
+            alert.setTitle("End Screen");
+            alert.setHeaderText(board.getWinner().getColor().toUpperCase() + " Player wins");
+            alert.show();
+        }
     }
 
     /**
@@ -214,8 +221,8 @@ public class GameController {
             if (step >= 0 && step < Player.NO_REGISTERS) {
                 CommandCard card = currentPlayer.getProgramField(step).getCard();
                 if (board.getPhase() != Phase.INTERACTED && card != null) {
-                    if (card.command != Command.LEFT_OR_RIGHT) {
-                        Command command = card.command;
+                    Command command = card.command;
+                    if (!command.isInteractive()) {
                         executeCommand(currentPlayer, command);
                     } else {
                         board.setPhase(Phase.PLAYER_INTERACTION);
