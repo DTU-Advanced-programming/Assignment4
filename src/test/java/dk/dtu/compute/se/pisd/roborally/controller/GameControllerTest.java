@@ -123,8 +123,6 @@ class GameControllerTest {
         Board board = gameController.board;
         Player current = board.getCurrentPlayer();
 
-        gameController.moveBackward(current);
-
         // TEST:
     }
 
@@ -133,8 +131,6 @@ class GameControllerTest {
         Board board = gameController.board;
         Player current = board.getCurrentPlayer();
 
-        gameController.moveBackward(current);
-
         // TEST:
     }
 
@@ -142,8 +138,6 @@ class GameControllerTest {
     void testCheckpoints() {
         Board board = gameController.board;
         Player current = board.getCurrentPlayer();
-
-        gameController.moveBackward(current);
 
         // TEST:
     }
