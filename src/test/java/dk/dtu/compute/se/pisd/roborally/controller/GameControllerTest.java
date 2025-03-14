@@ -87,7 +87,7 @@ class GameControllerTest {
     }
 
     @Test
-    void turnRight(){
+    void turnLeft(){
         Board board = gameController.board;
         Player current = board.getCurrentPlayer();
 
@@ -97,7 +97,7 @@ class GameControllerTest {
     }
 
     @Test
-    void turnLeft() {
+    void turnRight() {
         Board board = gameController.board;
         Player current = board.getCurrentPlayer();
 
