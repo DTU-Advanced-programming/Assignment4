@@ -45,4 +45,7 @@ public enum Command {
         this.displayName = displayName;
     }
 
+    public boolean isInteractive() {
+        return this.equals(LEFT_OR_RIGHT);
+    }
 }
