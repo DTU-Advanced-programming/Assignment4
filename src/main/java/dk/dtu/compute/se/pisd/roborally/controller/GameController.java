@@ -224,7 +224,7 @@ public class GameController {
 
                 }
                 int nextPlayerNumber = board.getPlayerNumber(currentPlayer) + 1;
-                board.setPhase(Phase.ACTIVATION);
+                    board.setPhase(Phase.ACTIVATION);
                 if (nextPlayerNumber < board.getPlayersNumber()) {
                     board.setCurrentPlayer(board.getPlayer(nextPlayerNumber));
                 } else {
