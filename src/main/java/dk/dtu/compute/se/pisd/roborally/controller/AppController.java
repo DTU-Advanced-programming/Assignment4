@@ -39,10 +39,11 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * ...
+ * The main controller for the RoboRally application. This class manages the game's lifecycle,
+ * including starting new games, saving/loading games, stopping the game, and exiting the application.
+ * It also implements the Observer interface to observe changes in the game state.
  *
  * @author Ekkart Kindler, ekki@dtu.dk
- *
  */
 public class AppController implements Observer {
 
@@ -103,10 +104,22 @@ public class AppController implements Observer {
         }
     }
 
+    /**
+     * Saves the current game state. This method is currently a placeholder and needs to be implemented
+     * in future versions of the application.
+     *
+     * @todo Implement game saving functionality.
+     */
     public void saveGame() {
         // TODO V4a: needs to be implemented
     }
 
+    /**
+     * Loads a saved game state. This method is currently a placeholder and needs to be implemented
+     * in future versions of the application. For now, it starts a new game if no game is running.
+     *
+     * @todo Implement game loading functionality.
+     */
     public void loadGame() {
         // TODO V4a: needs to be implemented
         // for now, we just create a new game
@@ -159,12 +172,22 @@ public class AppController implements Observer {
             Platform.exit();
         }
     }
-
+    /**
+     * Checks if a game is currently running.
+     *
+     * @return true if a game is running, false otherwise.
+     */
     public boolean isGameRunning() {
         return gameController != null;
     }
 
 
+    /**
+     * Updates the observer with changes from the observed subject. This method is part of the
+     * Observer interface and is currently a placeholder for future implementation.
+     *
+     * @param subject The subject that triggered the update.
+     */
     @Override
     public void update(Subject subject) {
         // XXX do nothing for now

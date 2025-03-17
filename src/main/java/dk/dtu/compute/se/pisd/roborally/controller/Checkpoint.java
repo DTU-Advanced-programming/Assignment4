@@ -27,32 +27,62 @@ import dk.dtu.compute.se.pisd.roborally.model.Space;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * This class represents a conveyor belt on a space.
+ * Represents a checkpoint on the game board. Checkpoints are used to track player progress
+ * and determine when a player has completed the game. This class extends FieldAction and
+ * implements the logic for updating player progress when they land on a checkpoint.
  *
  * @author Ekkart Kindler, ekki@dtu.dk
- *
  */
-// XXX A3
 public class Checkpoint extends FieldAction {
 
     private int number;
 
+    /**
+     * Sets the checkpoint number. The checkpoint number is used to track the sequence in which
+     * players must reach the checkpoints.
+     *
+     * @param num The checkpoint number.
+     */
     public void setNumber(int num) {number = num;}
 
+    /**
+     * Returns the checkpoint number.
+     *
+     * @return The checkpoint number.
+     */
     public int getNumber() {return number;}
     
     
     public boolean isLast = false;
-    
+
+    /**
+     * Sets whether this checkpoint is the last one in the game. The last checkpoint is used
+     * to determine when a player has won the game.
+     *
+     * @param last true if this is the last checkpoint, false otherwise.
+     */
     public void setLast(boolean last) {
     	this.isLast = last;
     }
-    
+
+    /**
+     * Returns whether this checkpoint is the last one in the game.
+     *
+     * @return true if this is the last checkpoint, false otherwise.
+     */
     public boolean getLast() {
     	return isLast;
     }
 
-
+    /**
+     * Executes the checkpoint action when a player lands on the space containing the checkpoint.
+     * This method updates the player's progress and checks if the player has reached the last
+     * checkpoint to determine if they have won the game.
+     *
+     * @param gameController The game controller managing the game logic.
+     * @param space The space containing the checkpoint.
+     * @return true if the action was successfully executed, false otherwise.
+     */
     @Override
     public boolean doAction(@NotNull GameController gameController, @NotNull Space space) {
         if (isLast && space.getPlayer() != null && space.getPlayer().getCurrentCheckpoint() == number - 1) {
