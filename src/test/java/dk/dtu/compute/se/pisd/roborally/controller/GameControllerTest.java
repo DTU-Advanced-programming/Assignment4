@@ -87,28 +87,61 @@ class GameControllerTest {
     }
 
     @Test
-    void turnRight(){
+    void turnLeft(){
         Board board = gameController.board;
         Player current = board.getCurrentPlayer();
 
-        gameController.turnRight(current);
+        gameController.turnLeft(current);
 
         Assertions.assertEquals(Heading.EAST, current.getHeading(), "Player 0 should be heading EAST!");
     }
 
     @Test
-    void turnLeft(){
+    void turnRight() {
         Board board = gameController.board;
         Player current = board.getCurrentPlayer();
 
-        gameController.moveForward(current);
+        gameController.turnRight(current);
 
         Assertions.assertEquals(Heading.WEST, current.getHeading(), "Player 0 should be heading WEST!");
-
     }
 
+    @Test
+    void moveBackward() {
+        Board board = gameController.board;
+        Player current = board.getCurrentPlayer();
 
+        gameController.moveBackward(current);
 
-    // TDOD and there should be more tests added for the different assignments eventually
+        Assertions.assertEquals(current, board.getSpace(0, 7).getPlayer(), "Player " + current.getName() + " should beSpace (0,7)!");
+        Assertions.assertEquals(Heading.SOUTH, current.getHeading(), "Player 0 should be heading SOUTH!");
+        Assertions.assertNull(board.getSpace(0, 0).getPlayer(), "Space (0,0) should be empty!");
+    }
+
+    @Test
+    void testWalls() {
+        Board board = gameController.board;
+        Player current = board.getCurrentPlayer();
+
+        // TEST:
+    }
+
+    @Test
+    void testConveyorBelts() {
+        Board board = gameController.board;
+        Player current = board.getCurrentPlayer();
+
+        // TEST:
+    }
+
+    @Test
+    void testCheckpoints() {
+        Board board = gameController.board;
+        Player current = board.getCurrentPlayer();
+
+        // TEST:
+    }
+
+    // TODO and there should be more tests added for the different assignments eventually
 
 }

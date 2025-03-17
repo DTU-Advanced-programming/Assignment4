@@ -234,4 +234,15 @@ public class Board extends Subject {
         // TODO V2: changed the status so that it shows the phase, the current player, and the current register
         return "Player = " + getCurrentPlayer().getName() + "\nMove count = " + getCounter();
     }
+
+
+    private Player winner;
+
+    public void setWinner(Player winner) {
+        this.winner = winner;
+    }
+
+    public Player getWinner() {
+        return winner;
+    }
 }

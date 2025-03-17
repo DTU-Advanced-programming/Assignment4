@@ -64,6 +64,8 @@ public class PlayerView extends Tab implements ViewObserver {
 
     private VBox playerInteractionPanel;
 
+    private Label directionLabel;
+
     private GameController gameController;
 
     public PlayerView(@NotNull GameController gameController, @NotNull Player player) {
@@ -116,6 +118,7 @@ public class PlayerView extends Tab implements ViewObserver {
         playerInteractionPanel.setSpacing(3.0);
 
         cardsLabel = new Label("Command Cards");
+
         cardsPane = new GridPane();
         cardsPane.setVgap(2.0);
         cardsPane.setHgap(2.0);
@@ -135,7 +138,7 @@ public class PlayerView extends Tab implements ViewObserver {
         top.getChildren().add(playerStatus);
 
         // TODO A3 add a label for the status of this player could be added here
-        //      ege showing the number of achieved chekpoints (etc).
+        //      ege showing the number of achieved checkpoints (etc).
 
         if (player.board != null) {
             player.board.attach(this);
@@ -147,7 +150,7 @@ public class PlayerView extends Tab implements ViewObserver {
     public void updateView(Subject subject) {
         if (subject == player.board) {
             // TODO A3 update the status label for this player
-            playerStatus.setText("checkpoints = " + player.getCurrentCheckpoint());
+            playerStatus.setText("Checkpoints = " + player.getCurrentCheckpoint());
             for (int i = 0; i < Player.NO_REGISTERS; i++) {
                 CardFieldView cardFieldView = programCardViews[i];
                 if (cardFieldView != null) {
@@ -214,15 +217,18 @@ public class PlayerView extends Tab implements ViewObserver {
                     //      an interactive command card, and the buttons should represent
                     //      the player's choices of the interactive command card. The
                     //      following is just a mockup showing two options
-                    Button optionButton = new Button("Option1");
-                    optionButton.setOnAction( e -> gameController.notImplemented());
+
+
+                    Button optionButton = new Button("Left");
+                    optionButton.setOnAction( e -> gameController.l_button(player));
                     optionButton.setDisable(false);
                     playerInteractionPanel.getChildren().add(optionButton);
 
-                    optionButton = new Button("Option 2");
-                    optionButton.setOnAction( e -> gameController.notImplemented());
+                    optionButton = new Button("Right");
+                    optionButton.setOnAction( e -> gameController.r_button(player));
                     optionButton.setDisable(false);
                     playerInteractionPanel.getChildren().add(optionButton);
+
                 }
             }
         }

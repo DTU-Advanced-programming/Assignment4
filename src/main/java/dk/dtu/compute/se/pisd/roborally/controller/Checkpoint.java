@@ -22,6 +22,7 @@
 package dk.dtu.compute.se.pisd.roborally.controller;
 
 import dk.dtu.compute.se.pisd.roborally.model.Heading;
+import dk.dtu.compute.se.pisd.roborally.model.Phase;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
 import org.jetbrains.annotations.NotNull;
 
@@ -54,18 +55,16 @@ public class Checkpoint extends FieldAction {
 
     @Override
     public boolean doAction(@NotNull GameController gameController, @NotNull Space space) {
-    	if (isLast) {
-			//TODO check to see if the player has won by checking if its the last checkpoint
-    		//Game state should be changed to Phase.FINISHED and a dialog box with current player has won should appear
-    		
-		}
+        if (isLast && space.getPlayer() != null && space.getPlayer().getCurrentCheckpoint() == number - 1) {
+            space.getPlayer().setCurrentCheckpoint(number);
+            space.board.setPhase(Phase.FINISHED);
+            space.board.setWinner(space.getPlayer());
+            return true;
+        }
     	if (space.getPlayer() != null && space.getPlayer().getCurrentCheckpoint() == number - 1) {
 			space.getPlayer().setCurrentCheckpoint(number);
 			return true;
 		}
-    	
-    	
-    	
         return false;
     }
 
