@@ -57,6 +57,7 @@ public class Checkpoint extends FieldAction {
     	if (isLast) {
 			//TODO check to see if the player has won by checking if its the last checkpoint
     		//Game state should be changed to Phase.FINISHED and a dialog box with current player has won should appear
+    		
 		}
     	if (space.getPlayer() != null && space.getPlayer().getCurrentCheckpoint() == number - 1) {
 			space.getPlayer().setCurrentCheckpoint(number);
