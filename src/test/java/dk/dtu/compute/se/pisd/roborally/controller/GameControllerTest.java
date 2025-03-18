@@ -211,7 +211,8 @@ class GameControllerTest {
         gameController.doAllAction();
         Assertions.assertEquals(1, current.getCurrentCheckpoint());
         Assertions.assertTrue(action1.isLast);
-        //Assertions.assertEquals(current, board.getSpace(0, 1).getPlayer(), "Player " + current.getName() + " should beSpace (0,1)!");
+        Assertions.assertEquals(1, action1.getNumber());
+        Assertions.assertTrue(action1.getLast());
     }
 
     // TODO and there should be more tests added for the different assignments eventually
