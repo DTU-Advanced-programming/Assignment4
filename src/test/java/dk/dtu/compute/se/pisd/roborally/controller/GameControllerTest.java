@@ -1,9 +1,6 @@
 package dk.dtu.compute.se.pisd.roborally.controller;
 
-import dk.dtu.compute.se.pisd.roborally.model.Board;
-import dk.dtu.compute.se.pisd.roborally.model.Heading;
-import dk.dtu.compute.se.pisd.roborally.model.Player;
-import dk.dtu.compute.se.pisd.roborally.model.Space;
+import dk.dtu.compute.se.pisd.roborally.model.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -209,5 +206,46 @@ class GameControllerTest {
     }
 
     // TODO and there should be more tests added for the different assignments eventually
+
+    /**
+     * Test case for the startProgrammingPhase method. This test verifies that:
+     * - The game phase is set to PROGRAMMING.
+     * - The current player is reset to the first player.
+     * - The step counter is reset to 0.
+     * - All program fields are cleared.
+     * - Random command cards are generated for each player's hand.
+     */
+    @Test
+    void testStartProgrammingPhase() {
+        Board board = gameController.board;
+        Player current = board.getCurrentPlayer();
+
+        gameController.startProgrammingPhase();
+
+        Assertions.assertEquals(Phase.PROGRAMMING, board.getPhase(),
+                "The game phase should be PROGRAMMING after starting the programming phase!");
+
+        Assertions.assertEquals(board.getPlayer(0), board.getCurrentPlayer(),
+                "The current player should be reset to the first player!");
+
+        Assertions.assertEquals(0, board.getStep(),
+                "The step counter should be reset to 0!");
+
+        for (int i = 0; i < board.getPlayersNumber(); i++) {
+            Player player = board.getPlayer(i);
+            for (int j = 0; j < Player.NO_REGISTERS; j++) {
+                Assertions.assertNull(player.getProgramField(j).getCard(),
+                        "Program field " + j + " for player " + player.getName() + " should be cleared!");
+            }
+        }
+
+        for (int i = 0; i < board.getPlayersNumber(); i++) {
+            Player player = board.getPlayer(i);
+            for (int j = 0; j < Player.NO_CARDS; j++) {
+                Assertions.assertNotNull(player.getCardField(j).getCard(),
+                        "Card field " + j + " for player " + player.getName() + " should have a random command card!");
+            }
+        }
+    }
 
 }
