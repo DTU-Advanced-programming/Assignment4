@@ -127,6 +127,28 @@ class GameControllerTest {
     }
 
     @Test
+    void l_button() {
+        Board board = gameController.board;
+        Player current = board.getCurrentPlayer();
+
+        gameController.l_button(current);
+
+        Assertions.assertEquals(Heading.EAST, current.getHeading(), "Player 0 should be heading EAST!");
+    }
+
+    @Test
+    void r_button() {
+        Board board = gameController.board;
+        Player current = board.getCurrentPlayer();
+
+        gameController.r_button(current);
+
+        Assertions.assertEquals(Heading.WEST, current.getHeading(), "Player 0 should be heading WEST!");
+    }
+
+
+
+    @Test
     void testWalls() {
         Board board = gameController.board;
         Player current = board.getCurrentPlayer();
@@ -204,6 +226,7 @@ class GameControllerTest {
         gameController.doAllAction();
         Assertions.assertEquals(current, board.getSpace(0,1).getPlayer(), "Space (0,1) should be empty!");
         Assertions.assertEquals(Heading.SOUTH, current.getHeading(), "Player 0 should be heading SOUTH!");
+        Assertions.assertEquals(action1.getHeading(),Heading.SOUTH);
     }
 
     @Test
