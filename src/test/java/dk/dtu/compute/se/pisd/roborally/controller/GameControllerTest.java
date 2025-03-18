@@ -1,6 +1,8 @@
 package dk.dtu.compute.se.pisd.roborally.controller;
 
 import dk.dtu.compute.se.pisd.roborally.model.*;
+import javafx.scene.control.Alert;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -329,14 +331,49 @@ class GameControllerTest {
         }
     }
     
-    @Test
-    void testWinner() {
-        Board board = gameController.board;
-        Player current = board.getCurrentPlayer();
-    	
-    	
-    	if (board.getPhase() == Phase.FINISHED) {
-    		Assertions.assertTrue();
-    	}
-    }
+//    @Test
+//    void testWinner() {
+//        Board board = gameController.board;
+//        Player current = board.getCurrentPlayer();
+//        Alert alert = new Alert(null);
+//    	
+//    	
+//    	if (board.getPhase() == Phase.FINISHED) {
+//    		Assertions.assert
+//    	}
+//    }
+/**
+ * Test case for the executeNextStep method. This test verifies that:
+ * - The current player's command is executed correctly.
+ */
+@Test
+void testExecuteNextStep() {
+    Board board = gameController.board;
+    Player current = board.getCurrentPlayer();
+
+    gameController.startProgrammingPhase();
+
+    Player player1 = board.getPlayer(0);
+    player1.getProgramField(0).setCard(new CommandCard(Command.FORWARD));
+    player1.getProgramField(1).setCard(new CommandCard(Command.RIGHT));
+    player1.getProgramField(2).setCard(new CommandCard(Command.FORWARD));
+
+    Player player2 = board.getPlayer(1);
+    player2.getProgramField(0).setCard(new CommandCard(Command.LEFT));
+    player2.getProgramField(1).setCard(new CommandCard(Command.FORWARD));
+    player2.getProgramField(2).setCard(new CommandCard(Command.FAST_FORWARD));
+    gameController.finishProgrammingPhase();
+    gameController.executeNextStep();
+    Assertions.assertEquals(player1, board.getSpace(0, 1).getPlayer(),
+            "Player 1 should be on Space (0,1) after executing FORWARD command!");
+    Assertions.assertEquals(player2, board.getCurrentPlayer(),
+            "The current player should be Player 2 after executing the first step!");
+    Assertions.assertEquals(Heading.WEST, player2.getHeading());
+    gameController.executeNextStep();
+    Assertions.assertEquals(player2, board.getSpace(1, 1).getPlayer(),
+            "Player 2 should be on Space (1,1) after executing LEFT command!");
+    Assertions.assertEquals(Heading.SOUTH, player2.getHeading());
+
+
+}
 }
