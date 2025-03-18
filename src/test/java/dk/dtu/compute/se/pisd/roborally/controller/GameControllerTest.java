@@ -187,7 +187,16 @@ class GameControllerTest {
         Board board = gameController.board;
         Player current = board.getCurrentPlayer();
 
-        // TEST:
+        Space space = board.getSpace(0,0);
+        ConveyorBelt action1 = new ConveyorBelt();
+        action1.setHeading(Heading.SOUTH);
+        space.getActions().add(action1);
+
+        Assertions.assertEquals(current, board.getSpace(0, 0).getPlayer(), "Player " + current.getName() + " should beSpace (0,0)!");
+        Assertions.assertEquals(Heading.SOUTH, current.getHeading(), "Player 0 should be heading SOUTH!");
+        gameController.doAllAction();
+        Assertions.assertEquals(current, board.getSpace(0,1).getPlayer(), "Space (0,1) should be empty!");
+        Assertions.assertEquals(Heading.SOUTH, current.getHeading(), "Player 0 should be heading SOUTH!");
     }
 
     @Test
