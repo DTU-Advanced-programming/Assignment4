@@ -305,6 +305,8 @@ public class GameController {
      * @see #turnRight(Player)
      * @see #turnLeft(Player)
      * @see #fastForward(Player)
+     * @see #moveBackward(Player) 
+     * @see #uTurn(Player) 
      */
     private void executeCommand(@NotNull Player player, Command command) {
         if (player != null && player.board == board && command != null) {
@@ -447,17 +449,17 @@ public class GameController {
      * @param target The target field to which to move the card.
      * @return true if the card was successfully moved, false otherwise.
      */
-    public boolean moveCards(@NotNull CommandCardField source, @NotNull CommandCardField target) {
-        CommandCard sourceCard = source.getCard();
-        CommandCard targetCard = target.getCard();
-        if (sourceCard != null && targetCard == null) {
-            target.setCard(sourceCard);
-            source.setCard(null);
-            return true;
-        } else {
-            return false;
-        }
-    }
+//    public boolean moveCards(@NotNull CommandCardField source, @NotNull CommandCardField target) {
+//        CommandCard sourceCard = source.getCard();
+//        CommandCard targetCard = target.getCard();
+//        if (sourceCard != null && targetCard == null) {
+//            target.setCard(sourceCard);
+//            source.setCard(null);
+//            return true;
+//        } else {
+//            return false;
+//        }
+//    }
     /**
      * A custom exception class for handling invalid player movements. This exception is thrown
      * when a player attempts to move to a space that is blocked by a wall or another player.
@@ -476,9 +478,9 @@ public class GameController {
      * A method called when no corresponding controller operation is implemented yet.
      * This should eventually be removed.
      */
-    public void notImplemented() {
-        // XXX just for now to indicate that the actual method is not yet implemented
-        assert false;
-    }
+//    public void notImplemented() {
+//        // XXX just for now to indicate that the actual method is not yet implemented
+//        assert false;
+//    }
 
 }
