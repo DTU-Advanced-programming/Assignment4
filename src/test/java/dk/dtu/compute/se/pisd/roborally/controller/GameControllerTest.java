@@ -117,6 +117,16 @@ class GameControllerTest {
     }
 
     @Test
+    void uTurn() {
+        Board board = gameController.board;
+        Player current = board.getCurrentPlayer();
+
+        gameController.uTurn(current);
+
+        Assertions.assertEquals(Heading.NORTH, current.getHeading(), "Player 0 should be heading NORTH!");
+    }
+
+    @Test
     void testWalls() {
         Board board = gameController.board;
         Player current = board.getCurrentPlayer();
