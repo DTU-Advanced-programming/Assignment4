@@ -117,6 +117,16 @@ class GameControllerTest {
     }
 
     @Test
+    void uTurn() {
+        Board board = gameController.board;
+        Player current = board.getCurrentPlayer();
+
+        gameController.uTurn(current);
+
+        Assertions.assertEquals(Heading.NORTH, current.getHeading(), "Player 0 should be heading NORTH!");
+    }
+
+    @Test
     void testWalls() {
         Board board = gameController.board;
         Player current = board.getCurrentPlayer();
@@ -257,5 +267,42 @@ class GameControllerTest {
             }
         }
     }
+    /**
+     * Test case for the finishProgrammingPhase method. This test verifies that:
+     * - The game phase is set to ACTIVATION.
+     * - The current player is reset to the first player.
+     * - The step counter is reset to 0.
+     * - All program fields are hidden except for the first register's fields.
+     */
+    @Test
+    void testFinishProgrammingPhase() {
+        Board board = gameController.board;
+        Player current = board.getCurrentPlayer();
 
+        gameController.startProgrammingPhase();
+
+        gameController.finishProgrammingPhase();
+
+        Assertions.assertEquals(Phase.ACTIVATION, board.getPhase(),
+                "The game phase should be ACTIVATION after finishing the programming phase!");
+
+        Assertions.assertEquals(board.getPlayer(0), board.getCurrentPlayer(),
+                "The current player should be reset to the first player!");
+
+        Assertions.assertEquals(0, board.getStep(),
+                "The step counter should be reset to 0!");
+
+        for (int i = 0; i < board.getPlayersNumber(); i++) {
+            Player player = board.getPlayer(i);
+            for (int j = 0; j < Player.NO_REGISTERS; j++) {
+                if (j == 0) {
+                    Assertions.assertTrue(player.getProgramField(j).isVisible(),
+                            "Program field " + j + " for player " + player.getName() + " should be visible!");
+                } else {
+                    Assertions.assertFalse(player.getProgramField(j).isVisible(),
+                            "Program field " + j + " for player " + player.getName() + " should be hidden!");
+                }
+            }
+        }
+    }
 }
