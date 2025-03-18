@@ -330,6 +330,7 @@ class GameControllerTest {
             }
         }
     }
+<<<<<<< HEAD
     
 //    @Test
 //    void testWinner() {
@@ -342,14 +343,14 @@ class GameControllerTest {
 //    		Assertions.assert
 //    	}
 //    }
-/**
- * Test case for the executeNextStep method. This test verifies that:
- * - The current player's command is executed correctly.
- */
-@Test
-void testExecuteNextStep() {
-    Board board = gameController.board;
-    Player current = board.getCurrentPlayer();
+
+    /**
+     * Test case for the executeNextStep method. This test verifies that:
+     * - The current player's command is executed correctly.
+     */
+    @Test
+    void testExecuteNextStep() {
+        Board board = gameController.board;
 
     gameController.startProgrammingPhase();
 
@@ -368,12 +369,12 @@ void testExecuteNextStep() {
             "Player 1 should be on Space (0,1) after executing FORWARD command!");
     Assertions.assertEquals(player2, board.getCurrentPlayer(),
             "The current player should be Player 2 after executing the first step!");
+    //heading before left turn
     Assertions.assertEquals(Heading.WEST, player2.getHeading());
     gameController.executeNextStep();
     Assertions.assertEquals(player2, board.getSpace(1, 1).getPlayer(),
             "Player 2 should be on Space (1,1) after executing LEFT command!");
+    //heading after left turn
     Assertions.assertEquals(Heading.SOUTH, player2.getHeading());
-
-
-}
+	}
 }
