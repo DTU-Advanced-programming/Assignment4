@@ -219,6 +219,7 @@ class GameControllerTest {
         space.getActions().add(action1);
 
         gameController.moveForward(current);
+        gameController.doAllAction();
         Assertions.assertEquals(1, current.getCurrentCheckpoint());
         Assertions.assertTrue(action1.isLast);
         //Assertions.assertEquals(current, board.getSpace(0, 1).getPlayer(), "Player " + current.getName() + " should beSpace (0,1)!");

@@ -273,7 +273,7 @@ public class GameController {
      * method iterates through all spaces on the board and executes the actions associated
      * with each space.
      */
-    private void doAllAction(){
+    public void doAllAction(){
         for (int x = 0; x<board.width; x++) {
             for (int y =0; y < board.height; y++) {
                 Space space = board.getSpace(x, y);
