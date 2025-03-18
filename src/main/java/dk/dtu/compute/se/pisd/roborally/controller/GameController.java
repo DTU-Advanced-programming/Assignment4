@@ -26,10 +26,12 @@ import javafx.scene.control.Alert;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * ...
+ * The main controller for managing the game logic in RoboRally. This class handles player
+ * movements, game phases, command execution, and interactions between players and the
+ * game board. It is tightly integrated with the Board, Player, and FieldAction classes
+ * to provide a cohesive gameplay experience.
  *
  * @author Ekkart Kindler, ekki@dtu.dk
- *
  */
 public class GameController {
 
@@ -40,10 +42,12 @@ public class GameController {
     }
 
     /**
-     * This is just some dummy controller operation to make a simple move to see something
-     * happening on the board. This method should eventually be deleted!
+     * Moves the current player to the specified space. This method is a placeholder and
+     * should be implemented to handle player movement, including checking for obstacles
+     * and updating the game state.
      *
-     * @param space the space to which the current player should move
+     * @param space The space to which the current player should move.
+     * @todo Implement player movement logic.
      */
     public void moveCurrentPlayerToSpace(@NotNull Space space)  {
         // TODO V1: method should be implemented by the students:
@@ -176,19 +180,28 @@ public class GameController {
         }
     }
 
-    // XXX V2
+    /**
+     * Executes all player programs in sequence without pausing (non-step mode). This method
+     * continues executing the programs until the activation phase is complete.
+     */
     public void executePrograms() {
         board.setStepMode(false);
         continuePrograms();
     }
 
-    // XXX V2
+    /**
+     * Executes the next step in the player programs (step mode). This method advances the
+     * game state by one step and pauses for user input before continuing.
+     */
     public void executeStep() {
         board.setStepMode(true);
         continuePrograms();
     }
 
-    // XXX V2
+    /**
+     * Continues executing the player programs until the activation phase is complete or step
+     * mode is active. This method displays a game-over message if the game is finished.
+     */
     private void continuePrograms() {
         do {
             executeNextStep();
@@ -255,7 +268,12 @@ public class GameController {
         }
     }
 
-    private void doAllAction(){
+    /**
+     * Executes all field actions on the board, such as conveyor belts and checkpoints. This
+     * method iterates through all spaces on the board and executes the actions associated
+     * with each space.
+     */
+    public void doAllAction(){
         for (int x = 0; x<board.width; x++) {
             for (int y =0; y < board.height; y++) {
                 Space space = board.getSpace(x, y);
@@ -421,6 +439,14 @@ public class GameController {
         continuePrograms();
     }
 
+    /**
+     * Moves a command card from one field to another. This method is used during the programming
+     * phase to allow players to rearrange their command cards.
+     *
+     * @param source The source field from which to move the card.
+     * @param target The target field to which to move the card.
+     * @return true if the card was successfully moved, false otherwise.
+     */
     public boolean moveCards(@NotNull CommandCardField source, @NotNull CommandCardField target) {
         CommandCard sourceCard = source.getCard();
         CommandCard targetCard = target.getCard();
@@ -432,7 +458,10 @@ public class GameController {
             return false;
         }
     }
-
+    /**
+     * A custom exception class for handling invalid player movements. This exception is thrown
+     * when a player attempts to move to a space that is blocked by a wall or another player.
+     */
     public static class ImpossibleMoveException extends ReflectiveOperationException {
 
         final public Player player;

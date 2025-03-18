@@ -152,6 +152,12 @@ public class BoardFactory {
         return board;
     }
 
+    /**
+     * Creates an advanced game board with more complex configurations. This board has a larger
+     * size and additional features compared to the simple board.
+     *
+     * @return A new advanced board.
+     */
     private Board advancedBoard(Board board) {
 
 

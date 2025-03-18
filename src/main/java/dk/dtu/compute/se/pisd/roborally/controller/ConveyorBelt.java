@@ -26,27 +26,43 @@ import dk.dtu.compute.se.pisd.roborally.model.Space;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * This class represents a conveyor belt on a space.
+ * Represents a conveyor belt on the game board. Conveyor belts automatically move players
+ * in a specific direction when they land on a space containing a conveyor belt. This class
+ * extends FieldAction and implements the logic for moving players.
  *
  * @author Ekkart Kindler, ekki@dtu.dk
- *
  */
-// XXX A3
 public class ConveyorBelt extends FieldAction {
 
     private Heading heading;
 
-
+    /**
+     * Returns the heading of the conveyor belt, which determines the direction in which players
+     * are moved.
+     *
+     * @return The heading of the conveyor belt.
+     */
     public Heading getHeading() {
         return heading;
     }
 
+    /**
+     * Sets the heading of the conveyor belt, which determines the direction in which players
+     * are moved.
+     *
+     * @param heading The heading of the conveyor belt.
+     */
     public void setHeading(Heading heading) {
         this.heading = heading;
     }
 
     /**
-     * Implementation of the action of a conveyor belt. Needs to be implemented for A3.
+     * Executes the conveyor belt action when a player lands on the space containing the conveyor
+     * belt. This method moves the player to the neighboring space in the specified direction.
+     *
+     * @param gameController The game controller managing the game logic.
+     * @param space The space containing the conveyor belt.
+     * @return true if the player was successfully moved, false otherwise.
      */
     @Override
     public boolean doAction(@NotNull GameController gameController, @NotNull Space space) {
