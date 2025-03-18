@@ -331,25 +331,19 @@ class GameControllerTest {
     /**
      * Test case for the executeNextStep method. This test verifies that:
      * - The current player's command is executed correctly.
-     * - The game progresses to the next player or step.
-     * - The game transitions to the FINISHED phase after all steps are completed.
      */
     @Test
     void testExecuteNextStep() {
-        // Get the board and the current player
         Board board = gameController.board;
         Player current = board.getCurrentPlayer();
 
-        // Start the programming phase
         gameController.startProgrammingPhase();
 
-        // Program the first player's commands
         Player player1 = board.getPlayer(0);
         player1.getProgramField(0).setCard(new CommandCard(Command.FORWARD));
         player1.getProgramField(1).setCard(new CommandCard(Command.RIGHT));
         player1.getProgramField(2).setCard(new CommandCard(Command.FORWARD));
 
-        // Program the second player's commands
         Player player2 = board.getPlayer(1);
         player2.getProgramField(0).setCard(new CommandCard(Command.LEFT));
         player2.getProgramField(1).setCard(new CommandCard(Command.FORWARD));
