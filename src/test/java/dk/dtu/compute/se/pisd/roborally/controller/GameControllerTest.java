@@ -335,7 +335,6 @@ class GameControllerTest {
     @Test
     void testExecuteNextStep() {
         Board board = gameController.board;
-        Player current = board.getCurrentPlayer();
 
         gameController.startProgrammingPhase();
 
@@ -357,7 +356,10 @@ class GameControllerTest {
         gameController.executeNextStep();
         Assertions.assertEquals(player2, board.getSpace(1, 1).getPlayer(),
                 "Player 2 should be on Space (1,1) after executing LEFT command!");
-
+        gameController.executeNextStep();
+        // Assert that the first player's heading is updated correctly
+        Assertions.assertEquals(Heading.WEST, player1.getHeading(),
+                "Player 1 should be facing WEST after executing RIGHT command!");
 
     }
 }
