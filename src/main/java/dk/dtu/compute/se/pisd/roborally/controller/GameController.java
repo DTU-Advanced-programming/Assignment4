@@ -207,10 +207,7 @@ public class GameController {
             executeNextStep();
         } while (board.getPhase() == Phase.ACTIVATION && !board.isStepMode());
         if (board.getPhase() == Phase.FINISHED) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Game Over! Thanks for playing.");
-            alert.setTitle("End Screen");
-            alert.setHeaderText(board.getWinner().getColor().toUpperCase() + " Player wins");
-            alert.show();
+            showGameOver();
         }
     }
 
@@ -470,6 +467,13 @@ public class GameController {
             super(message);
             this.player = player;
         }
+    }
+
+    private void showGameOver(){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, "Game Over! Thanks for playing.");
+        alert.setTitle("End Screen");
+        alert.setHeaderText(board.getWinner().getColor().toUpperCase() + " Player wins");
+        alert.show();
     }
 
     /**
