@@ -330,7 +330,7 @@ class GameControllerTest {
             }
         }
     }
-<<<<<<< HEAD
+
     
 //    @Test
 //    void testWinner() {
@@ -377,4 +377,76 @@ class GameControllerTest {
     //heading after left turn
     Assertions.assertEquals(Heading.SOUTH, player2.getHeading());
 	}
+    @Test
+    void testExecutePrograms() {
+        Board board = gameController.board;
+        gameController.startProgrammingPhase();
+
+        Player player1 = board.getPlayer(0);
+        player1.getProgramField(0).setCard(new CommandCard(Command.FORWARD));
+        player1.getProgramField(1).setCard(new CommandCard(Command.RIGHT));
+        player1.getProgramField(2).setCard(new CommandCard(Command.FORWARD));
+
+        Player player2 = board.getPlayer(1);
+        player2.getProgramField(0).setCard(new CommandCard(Command.LEFT));
+        player2.getProgramField(1).setCard(new CommandCard(Command.FORWARD));
+        player2.getProgramField(2).setCard(new CommandCard(Command.FAST_FORWARD));
+
+        gameController.finishProgrammingPhase();
+        gameController.executePrograms();
+
+        Assertions.assertEquals(player2, board.getSpace(1, 4).getPlayer(),
+                "Player 2 should be on Space (1,4) after executing their program!");
+
+        Assertions.assertEquals(Heading.WEST, player1.getHeading(),
+                "Player 1 should be facing WEST after executing RIGHT command!");
+
+        Assertions.assertEquals(Heading.SOUTH, player2.getHeading(),
+                "Player 2 should be facing SOUTH after executing LEFT command!");
+    }
+    /**
+     * Test case for the executeStep method.
+     * - The game executes one step of the current player's program.
+     */
+    @Test
+    void testExecuteStep() {
+        Board board = gameController.board;
+
+        // Start the programming phase
+        gameController.startProgrammingPhase();
+
+        // Program the first player's commands
+        Player player1 = board.getPlayer(0);
+        player1.getProgramField(0).setCard(new CommandCard(Command.FORWARD));
+        player1.getProgramField(1).setCard(new CommandCard(Command.RIGHT));
+        player1.getProgramField(2).setCard(new CommandCard(Command.FORWARD));
+
+        // Program the second player's commands
+        Player player2 = board.getPlayer(1);
+        player2.getProgramField(0).setCard(new CommandCard(Command.LEFT));
+        player2.getProgramField(1).setCard(new CommandCard(Command.FORWARD));
+        player2.getProgramField(2).setCard(new CommandCard(Command.FAST_FORWARD));
+
+        // Finish the programming phase
+        gameController.finishProgrammingPhase();
+
+        // Execute the first step
+        gameController.executeStep();
+
+        // Assert that the first player's command was executed
+        Assertions.assertEquals(player1, board.getSpace(0, 1).getPlayer(),
+                "Player 1 should be on Space (0,1) after executing FORWARD command!");
+
+        // Assert that the current player is now the second player
+        Assertions.assertEquals(player2, board.getCurrentPlayer(),
+                "The current player should be Player 2 after executing the first step!");
+
+        // Execute the second step
+        gameController.executeStep();
+
+        // Assert that the second player's command was executed
+        Assertions.assertEquals(player2, board.getSpace(1, 1).getPlayer(),
+                "Player 2 should be on Space (1,1) after executing LEFT command!");
+
+    }
 }
