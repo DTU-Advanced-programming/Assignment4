@@ -3,6 +3,7 @@ package dk.dtu.compute.se.pisd.roborally.controller;
 import dk.dtu.compute.se.pisd.roborally.model.Board;
 import dk.dtu.compute.se.pisd.roborally.model.Heading;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
+import dk.dtu.compute.se.pisd.roborally.model.Space;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -139,7 +140,16 @@ class GameControllerTest {
         Board board = gameController.board;
         Player current = board.getCurrentPlayer();
 
-        // TEST:
+        Space space = board.getSpace(0,1);
+        Checkpoint action1  = new Checkpoint();
+        action1.setNumber(1);
+        action1.setLast(true);
+        space.getActions().add(action1);
+
+        gameController.moveForward(current);
+        Assertions.assertEquals(1, current.getCurrentCheckpoint());
+        Assertions.assertTrue(action1.isLast);
+        //Assertions.assertEquals(current, board.getSpace(0, 1).getPlayer(), "Player " + current.getName() + " should beSpace (0,1)!");
     }
 
     // TODO and there should be more tests added for the different assignments eventually
