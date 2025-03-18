@@ -3,6 +3,7 @@ package dk.dtu.compute.se.pisd.roborally.controller;
 import dk.dtu.compute.se.pisd.roborally.model.Board;
 import dk.dtu.compute.se.pisd.roborally.model.Heading;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
+import dk.dtu.compute.se.pisd.roborally.model.Space;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -120,12 +121,84 @@ class GameControllerTest {
 
     @Test
     void testWalls() {
+        // Get the board and the current player
         Board board = gameController.board;
         Player current = board.getCurrentPlayer();
 
-        // TEST:
-    }
+        // Set the player's initial position and heading
+        current.setSpace(board.getSpace(0, 0)); // Start at (0, 0)
+        current.setHeading(Heading.EAST); // Player is facing EAST
 
+        // Add a wall to the space to the east of the player (space (1, 0))
+        Space wallSpace = board.getSpace(1, 0);
+        wallSpace.getWalls().add(Heading.WEST); // Wall blocks movement from the west
+
+        // Attempt to move the player forward (towards the wall)
+        gameController.moveForward(current);
+
+        // Assert that the player did not move through the wall
+        Assertions.assertEquals(current, board.getSpace(0, 0).getPlayer(),
+                "Player " + current.getName() + " should still be on Space (0,0)!");
+
+        // Assert that the space with the wall is still empty
+        Assertions.assertNull(wallSpace.getPlayer(),
+                "Space (1,0) should be empty because the wall blocked the player!");
+    }
+    @Test
+    void testWallNorth() {
+        Board board = gameController.board;
+        Player current = board.getCurrentPlayer();
+
+        // Set the player's initial position and heading
+        current.setSpace(board.getSpace(1, 1)); // Start at (1, 1)
+        current.setHeading(Heading.NORTH); // Player is facing NORTH
+
+        // Add a wall to the space to the north of the player (space (1, 0))
+        Space wallSpace = board.getSpace(1, 0);
+        wallSpace.getWalls().add(Heading.SOUTH); // Wall blocks movement from the south
+
+        // Attempt to move the player forward (towards the wall)
+        gameController.moveForward(current);
+
+        // Assert that the player did not move through the wall
+        Assertions.assertEquals(current, board.getSpace(1, 1).getPlayer(),
+                "Player " + current.getName() + " should still be on Space (1,1)!");
+
+        // Assert that the space with the wall is still empty
+        Assertions.assertNull(wallSpace.getPlayer(),
+                "Space (1,0) should be empty because the wall blocked the player!");
+    }
+    @Test
+    void testMultipleWalls() {
+        Board board = gameController.board;
+        Player current = board.getCurrentPlayer();
+
+        // Set the player's initial position and heading
+        current.setSpace(board.getSpace(2, 2)); // Start at (2, 2)
+        current.setHeading(Heading.SOUTH); // Player is facing SOUTH
+
+        // Add walls to the spaces to the south and east of the player
+        Space wallSpaceSouth = board.getSpace(2, 3);
+        wallSpaceSouth.getWalls().add(Heading.NORTH); // Wall blocks movement from the north
+
+        Space wallSpaceEast = board.getSpace(3, 2);
+        wallSpaceEast.getWalls().add(Heading.WEST); // Wall blocks movement from the west
+
+        // Attempt to move the player forward (towards the south wall)
+        gameController.moveForward(current);
+
+        // Assert that the player did not move through the wall
+        Assertions.assertEquals(current, board.getSpace(2, 2).getPlayer(),
+                "Player " + current.getName() + " should still be on Space (2,2)!");
+
+        // Attempt to move the player east (towards the east wall)
+        current.setHeading(Heading.EAST);
+        gameController.moveForward(current);
+
+        // Assert that the player did not move through the wall
+        Assertions.assertEquals(current, board.getSpace(2, 2).getPlayer(),
+                "Player " + current.getName() + " should still be on Space (2,2)!");
+    }
     @Test
     void testConveyorBelts() {
         Board board = gameController.board;
