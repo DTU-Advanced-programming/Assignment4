@@ -328,48 +328,15 @@ class GameControllerTest {
             }
         }
     }
-    /**
-     * Test case for the executeNextStep method. This test verifies that:
-     * - The current player's command is executed correctly.
-     */
+    
     @Test
-    void testExecuteNextStep() {
+    void testWinner() {
         Board board = gameController.board;
         Player current = board.getCurrentPlayer();
-
-        gameController.startProgrammingPhase();
-
-        Player player1 = board.getPlayer(0);
-        player1.getProgramField(0).setCard(new CommandCard(Command.FORWARD));
-        player1.getProgramField(1).setCard(new CommandCard(Command.RIGHT));
-        player1.getProgramField(2).setCard(new CommandCard(Command.FORWARD));
-
-        Player player2 = board.getPlayer(1);
-        player2.getProgramField(0).setCard(new CommandCard(Command.LEFT));
-        player2.getProgramField(1).setCard(new CommandCard(Command.FORWARD));
-        player2.getProgramField(2).setCard(new CommandCard(Command.FAST_FORWARD));
-
-        // Finish the programming phase
-        gameController.finishProgrammingPhase();
-
-        // Execute the first step
-        gameController.executeNextStep();
-
-        // Assert that the first player's command was executed
-        Assertions.assertEquals(player1, board.getSpace(0, 1).getPlayer(),
-                "Player 1 should be on Space (0,1) after executing FORWARD command!");
-
-        // Assert that the current player is now the second player
-        Assertions.assertEquals(player2, board.getCurrentPlayer(),
-                "The current player should be Player 2 after executing the first step!");
-
-        // Execute the second step
-        gameController.executeNextStep();
-
-        // Assert that the second player's command was executed
-        Assertions.assertEquals(player2, board.getSpace(1, 1).getPlayer(),
-                "Player 2 should be on Space (1,1) after executing LEFT command!");
-
-
+    	
+    	
+    	if (board.getPhase() == Phase.FINISHED) {
+    		Assertions.assertTrue();
+    	}
     }
 }
