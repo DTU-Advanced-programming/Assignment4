@@ -258,7 +258,6 @@ class GameControllerTest {
         Assertions.assertTrue(action1.getLast());
     }
 
-    // TODO and there should be more tests added for the different assignments eventually
 
     /**
      * Test case for the startProgrammingPhase method. This test verifies that:
