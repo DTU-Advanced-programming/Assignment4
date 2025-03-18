@@ -227,7 +227,7 @@ public class GameController {
      * @see #executeCommand(Player, Command)
      * @see #startProgrammingPhase()
      */
-    private void executeNextStep() {
+    void executeNextStep() {
         Player currentPlayer = board.getCurrentPlayer();
         if ((board.getPhase() == Phase.ACTIVATION || board.getPhase() == Phase.INTERACTED)&& currentPlayer != null) {
             int step = board.getStep();
@@ -244,7 +244,7 @@ public class GameController {
 
                 }
                 int nextPlayerNumber = board.getPlayerNumber(currentPlayer) + 1;
-                    board.setPhase(Phase.ACTIVATION);
+                board.setPhase(Phase.ACTIVATION);
                 if (nextPlayerNumber < board.getPlayersNumber()) {
                     board.setCurrentPlayer(board.getPlayer(nextPlayerNumber));
                 } else {
